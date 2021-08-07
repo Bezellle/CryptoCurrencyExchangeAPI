@@ -33,7 +33,4 @@ public class CryptoExchangeResponse {
         this.rates = rates;
     }
 
-    public void putRates(String currency, BigDecimal rate){
-        rates.put(currency, rate);
-    }
 }
