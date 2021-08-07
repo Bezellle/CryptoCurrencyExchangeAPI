@@ -6,22 +6,23 @@ import java.math.BigDecimal;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CurrancyRequest {
-    private String id;
-    private BigDecimal price;
+    private String currency;
+    private BigDecimal rate;
 
-    public String getId() {
-        return id;
+
+    public String getCurrency() {
+        return currency;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getRate() {
+        return rate;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setRate(BigDecimal rate) {
+        this.rate = rate;
     }
 }

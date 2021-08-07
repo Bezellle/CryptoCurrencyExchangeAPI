@@ -1,10 +1,14 @@
 package com.example.currancyexchange;
 
+import com.example.currancyexchange.domain.CurrancyRequest;
+import com.example.currancyexchange.domain.NomicCombinedResponse;
+import com.example.currancyexchange.domain.RatesCryptoExchangeResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 @Component
@@ -20,20 +24,9 @@ public class CryptoExchangeClient {
         this.restTemplate = restTemplate;
     }
 
-    public NomicCombinedResponse getCurrenciesRates(String currency, List<String> filters) {
-        NomicCombinedResponse nomicCombinedResponse = new NomicCombinedResponse();
-        if(filters != null && !filters.isEmpty()){
-            for(String filter: filters) {
-                String filterURL = "&convert=" + filter;
-                CurrancyRequest[] response = restTemplate.getForObject(nomicsAPI_URL + key + "&ids=" + currency + filterURL, CurrancyRequest[].class);
-                nomicCombinedResponse.add(response[0]);
-            }
-        }
-        else{
-            CurrancyRequest[] response = restTemplate.getForObject(nomicsAPI_URL+key+"&ids="+ currency, CurrancyRequest[].class);
-            nomicCombinedResponse.add(response[0]);
-        }
+    public CurrancyRequest[] getNomicCombinesResponseList() {
 
-        return nomicCombinedResponse;
+        CurrancyRequest[] response = restTemplate.getForObject(nomicsAPI_URL+key, CurrancyRequest[].class);
+        return response;
     }
 }
