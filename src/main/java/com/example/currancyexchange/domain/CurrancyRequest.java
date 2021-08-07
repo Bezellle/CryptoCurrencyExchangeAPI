@@ -1,4 +1,4 @@
-package com.example.currancyexchange;
+package com.example.currancyexchange.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
