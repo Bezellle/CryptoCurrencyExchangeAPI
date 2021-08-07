@@ -1,4 +1,4 @@
-package com.example.currancyexchange;
+package com.example.currancyexchange.domain;
 
 import java.util.ArrayList;
 
@@ -12,6 +12,10 @@ public class NomicCombinedResponse {
 
     public void add(CurrancyRequest currancyRequest) {
         combinedResponse.add(currancyRequest);
+    }
+
+    public Integer length() {
+        return combinedResponse.size();
     }
 
 }
