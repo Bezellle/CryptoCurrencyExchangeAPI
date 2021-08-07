@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class RatesCryptoExchangeResponse {
+public class RequestedRates {
 
     private Map<String, BigDecimal> rates = new HashMap<>();
 
