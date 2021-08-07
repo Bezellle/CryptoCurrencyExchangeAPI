@@ -1,11 +1,17 @@
 package com.example.currancyexchange.domain;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class RatesCryptoExchangeResponse {
 
-    private Map<String, BigDecimal> rates;
+    private Map<String, BigDecimal> rates = new HashMap<>();
 
     public Map<String, BigDecimal> getRates() {
         return rates;
