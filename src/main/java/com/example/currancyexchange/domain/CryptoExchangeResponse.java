@@ -32,4 +32,8 @@ public class CryptoExchangeResponse {
     public void setRates(Map<String, BigDecimal> rates) {
         this.rates = rates;
     }
+
+    public void putRates(String currency, BigDecimal rate){
+        rates.put(currency, rate);
+    }
 }
