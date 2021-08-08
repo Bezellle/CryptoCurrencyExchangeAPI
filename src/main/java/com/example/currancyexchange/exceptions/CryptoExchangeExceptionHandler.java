@@ -16,12 +16,18 @@ public class CryptoExchangeExceptionHandler extends ResponseEntityExceptionHandl
     @ExceptionHandler(value = ArithmeticException.class)
     protected ResponseEntity<Object> handleArithmeticException(ArithmeticException ex, WebRequest request){
         String responseBody = "Cannot calculate exchange result for currancy with rate=0 ";
-        System.out.println("Dividing by 0");
+        System.out.println(responseBody);
         return handleExceptionInternal(ex, responseBody, new HttpHeaders(), BAD_REQUEST, request);
     }
 
     @ExceptionHandler(value = WrongCurrencyException.class)
     protected ResponseEntity<Object> handlerWrongCurrencyException(WrongCurrencyException ex, WebRequest request){
+        System.out.println(ex.getMessage());
+        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(value = WrongAmountException.class)
+    protected ResponseEntity<Object> handlerWrongAmountException(WrongAmountException ex, WebRequest request){
         System.out.println(ex.getMessage());
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), BAD_REQUEST, request);
     }

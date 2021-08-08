@@ -1,7 +1,7 @@
-package com.example.currancyexchange;
+package com.example.currancyexchange.logic;
 
 import com.example.currancyexchange.domain.currency.CryptoExchangeResponse;
-import com.example.currancyexchange.domain.currency.CurrancyRequest;
+import com.example.currancyexchange.domain.currency.CurrancyNomicResponse;
 import com.example.currancyexchange.domain.currency.RequestedRates;
 import com.example.currancyexchange.domain.exchange.ExchangeRequestBody;
 import com.example.currancyexchange.domain.exchange.ExchangeResponse;
@@ -27,15 +27,16 @@ public class CryptoExchangeService {
     }
 
     public CryptoExchangeResponse getCurrancyResponse(String currency, List<String> filters) {
-        CurrancyRequest[] currancyRequests = cryptoExchangeClient.getAPICurrencyRequest();
-        RequestedRates requestedRates = cryptoExchangeResponseMapper.createMapWithRates(currancyRequests);
+        CurrancyNomicResponse[] currancyNomicResponses = cryptoExchangeClient.getAPICurrencyRequest();
+        RequestedRates requestedRates = cryptoExchangeResponseMapper.createMapWithRates(currancyNomicResponses);
         CryptoExchangeValidator.validateCurrency(requestedRates, currency, filters);
         return cryptoExchangeCalculator.calculateResponseRates(requestedRates, currency, filters);
     }
 
     public ExchangeResponse getExchangeResponse(ExchangeRequestBody exchangeRequestBody) {
-        CurrancyRequest[] currancyRequests = cryptoExchangeClient.getAPICurrencyRequest();
-        RequestedRates requestedRates = cryptoExchangeResponseMapper.createMapWithRates(currancyRequests);
+        CryptoExchangeValidator.volidateAmount(exchangeRequestBody.getAmount());
+        CurrancyNomicResponse[] currancyNomicResponses = cryptoExchangeClient.getAPICurrencyRequest();
+        RequestedRates requestedRates = cryptoExchangeResponseMapper.createMapWithRates(currancyNomicResponses);
         CryptoExchangeValidator.validateCurrency(requestedRates, exchangeRequestBody.getFrom(), exchangeRequestBody.getTo());
         ArrayList<ExchangeResult> exchangeResult = cryptoExchangeCalculator.calculateExchangeResults(requestedRates, exchangeRequestBody);
         return cryptoExchangeResponseMapper.createExchangeResponse(exchangeRequestBody, exchangeResult);
