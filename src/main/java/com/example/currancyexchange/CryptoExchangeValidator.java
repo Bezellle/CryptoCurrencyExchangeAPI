@@ -7,14 +7,14 @@ import java.util.List;
 
 public class CryptoExchangeValidator {
 
-    public static void validateCurrency(RequestedRates rates, String from, List<String> to) {
+    public static void validateCurrency(RequestedRates rates, String from, List<String> currencyToList) {
         if (!rates.getRates().containsKey(from)){
-            throw new WrongCurrencyException("Given Currency not found!");
+            throw new WrongCurrencyException(String.format("Currency not found: %s", from));
         };
-        if (!to.isEmpty() && to != null) {
-            for (String currency : to) {
+        if (!currencyToList.isEmpty() && currencyToList != null) {
+            for (String currency : currencyToList) {
                 if(!rates.getRates().containsKey(currency)){
-                    throw new WrongCurrencyException("Given Currency not found!");
+                    throw new WrongCurrencyException(String.format("Currency not found: %s", currency));
                 };
             }
         }

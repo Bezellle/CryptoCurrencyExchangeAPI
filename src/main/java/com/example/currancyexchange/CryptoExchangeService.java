@@ -24,19 +24,19 @@ public class CryptoExchangeService {
     public CryptoExchangeResponse getCurrancyResponse(String currency, List<String> filters) {
         CurrancyRequest[] currancyRequests = cryptoExchangeClient.getAPICurrencyRequest();
         RequestedRates requestedRates = cryptoExchangeResponseMapper.createMapWithRates(currancyRequests);
-
+        CryptoExchangeValidator.validateCurrency(requestedRates, currency, filters);
         return cryptoExchangeCalculator.calculateResponseRates(requestedRates, currency, filters);
     }
 
     public ExchangeResponse getExchangeResponse(ExchangeRequestBody exchangeRequestBody) {
         CurrancyRequest[] currancyRequests = cryptoExchangeClient.getAPICurrencyRequest();
         RequestedRates requestedRates = cryptoExchangeResponseMapper.createMapWithRates(currancyRequests);
+        CryptoExchangeValidator.validateCurrency(requestedRates, exchangeRequestBody.getFrom(), exchangeRequestBody.getTo());
         ArrayList<ExchangeResult> exchangeResult = cryptoExchangeCalculator.calculateExchangeResults(requestedRates, exchangeRequestBody);
         return cryptoExchangeResponseMapper.createExchangeResponse(exchangeRequestBody, exchangeResult);
     }
 }
 
-// TODO Validation
 // TODO Testing
 // TODO Packages
 // TODO Name Refactor
