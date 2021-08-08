@@ -37,3 +37,6 @@ public class CryptoExchangeService {
 }
 
 // TODO Validation
+// TODO Testing
+// TODO Packages
+// TODO Name Refactor
