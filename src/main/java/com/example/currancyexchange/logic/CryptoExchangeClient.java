@@ -8,6 +8,22 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class CryptoExchangeClient {
 
+    public String getNomicsAPI_URL() {
+        return nomicsAPI_URL;
+    }
+
+    public void setNomicsAPI_URL(String nomicsAPI_URL) {
+        this.nomicsAPI_URL = nomicsAPI_URL;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     @Value("${nomicsAPI_URL}")
     private String nomicsAPI_URL;
     @Value("${key}")

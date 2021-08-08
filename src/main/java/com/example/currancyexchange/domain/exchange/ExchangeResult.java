@@ -6,7 +6,7 @@ public class ExchangeResult {
     private String currency;
     private BigDecimal rate;
     private BigDecimal result;
-    private final BigDecimal fee= BigDecimal.valueOf(1).movePointLeft(4);
+    private final BigDecimal fee = new BigDecimal("0.0001");
 
     public final BigDecimal getFee() {
         return fee;
