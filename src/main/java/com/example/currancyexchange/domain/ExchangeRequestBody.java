@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ExchangeRequestBody {
     private String from;
     private BigDecimal amount;
-    private ArrayList<String> to;
+    private List<String> to;
 
     public String getFrom() {
         return from;
@@ -27,7 +28,7 @@ public class ExchangeRequestBody {
         this.amount = amount;
     }
 
-    public ArrayList<String> getTo() {
+    public List<String> getTo() {
         return to;
     }
 
