@@ -1,11 +1,9 @@
 package com.example.currancyexchange;
 
-import com.example.currancyexchange.domain.CryptoExchangeResponse;
-import com.example.currancyexchange.domain.CurrancyRequest;
-import com.example.currancyexchange.domain.RequestedRates;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.currancyexchange.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,11 +22,18 @@ public class CryptoExchangeService {
     }
 
     public CryptoExchangeResponse getCurrancyResponse(String currency, List<String> filters) {
-        CurrancyRequest[] currancyRequests = cryptoExchangeClient.getNomicCombinesResponseList();
+        CurrancyRequest[] currancyRequests = cryptoExchangeClient.getAPICurrencyRequest();
         RequestedRates requestedRates = cryptoExchangeResponseMapper.createMapWithRates(currancyRequests);
 
         return cryptoExchangeCalculator.calculateResponseRates(requestedRates, currency, filters);
     }
+
+    public ExchangeResponse getExchangeResponse(ExchangeRequestBody exchangeRequestBody) {
+        CurrancyRequest[] currancyRequests = cryptoExchangeClient.getAPICurrencyRequest();
+        RequestedRates requestedRates = cryptoExchangeResponseMapper.createMapWithRates(currancyRequests);
+        ArrayList<ExchangeResult> exchangeResult = cryptoExchangeCalculator.calculateExchangeResults(requestedRates, exchangeRequestBody);
+        return cryptoExchangeResponseMapper.createExchangeResponse(exchangeRequestBody, exchangeResult);
+    }
 }
 
-// TODO Validation, Exception
+// TODO Validation
