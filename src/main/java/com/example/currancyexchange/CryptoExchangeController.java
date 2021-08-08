@@ -1,14 +1,12 @@
 package com.example.currancyexchange;
 
 import com.example.currancyexchange.domain.CryptoExchangeResponse;
-import com.example.currancyexchange.domain.NomicCombinedResponse;
+import com.example.currancyexchange.domain.ExchangeRequestBody;
+import com.example.currancyexchange.domain.ExchangeResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +28,12 @@ public class CryptoExchangeController {
 
         CryptoExchangeResponse cryptoExchangeResponse = cryptoExchangeService.getCurrancyResponse(currency,filters);
         return new ResponseEntity<>( cryptoExchangeResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/currencies/exchange")
+    public ResponseEntity<Object> calculateExchange(@RequestBody ExchangeRequestBody exchangeRequestBody){
+        ExchangeResponse exchangeResponse = cryptoExchangeService.getExchangeResponse(exchangeRequestBody);
+        return new ResponseEntity<>(exchangeResponse, HttpStatus.OK);
     }
 
 
