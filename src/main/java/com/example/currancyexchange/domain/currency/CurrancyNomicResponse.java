@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CurrancyRequest {
+public class CurrancyNomicResponse {
     private String currency;
     private BigDecimal rate;
 
