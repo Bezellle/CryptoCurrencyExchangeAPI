@@ -6,9 +6,9 @@ public class ExchangeResult {
     private String currency;
     private BigDecimal rate;
     private BigDecimal result;
-    private static double fee = (float) 0.0001;
+    private final BigDecimal fee= BigDecimal.valueOf(1).movePointLeft(4);
 
-    public static double getFee() {
+    public final BigDecimal getFee() {
         return fee;
     }
 

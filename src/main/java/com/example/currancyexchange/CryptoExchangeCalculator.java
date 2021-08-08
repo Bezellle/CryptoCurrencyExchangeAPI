@@ -39,7 +39,7 @@ public class CryptoExchangeCalculator {
             ExchangeResult result = new ExchangeResult();
             result.setCurrency(currencyTo);
             result.setRate(calculateRate(requestedRates, exchangeRequestBody.getFrom(), currencyTo));
-            result.setResult(exchangeRequestBody.getAmount().multiply(BigDecimal.valueOf(ExchangeResult.getFee())).multiply(result.getRate()));
+            result.setResult(exchangeRequestBody.getAmount().multiply(BigDecimal.ONE.subtract(result.getFee())).multiply(result.getRate()).setScale(2,RoundingMode.HALF_UP));
 
             exchangeResults.add(result);
         }
