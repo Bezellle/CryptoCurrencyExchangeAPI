@@ -1,6 +1,11 @@
 package com.example.currancyexchange;
 
-import com.example.currancyexchange.domain.*;
+import com.example.currancyexchange.domain.currency.CryptoExchangeResponse;
+import com.example.currancyexchange.domain.currency.CurrancyRequest;
+import com.example.currancyexchange.domain.currency.RequestedRates;
+import com.example.currancyexchange.domain.exchange.ExchangeRequestBody;
+import com.example.currancyexchange.domain.exchange.ExchangeResponse;
+import com.example.currancyexchange.domain.exchange.ExchangeResult;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

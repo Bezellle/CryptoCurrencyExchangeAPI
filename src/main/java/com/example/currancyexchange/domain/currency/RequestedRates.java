@@ -1,4 +1,4 @@
-package com.example.currancyexchange.domain;
+package com.example.currancyexchange.domain.currency;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

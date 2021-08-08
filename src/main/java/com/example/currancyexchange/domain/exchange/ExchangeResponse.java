@@ -1,6 +1,5 @@
-package com.example.currancyexchange.domain;
+package com.example.currancyexchange.domain.exchange;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 

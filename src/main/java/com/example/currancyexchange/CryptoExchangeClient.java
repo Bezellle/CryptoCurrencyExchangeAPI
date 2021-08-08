@@ -1,6 +1,6 @@
 package com.example.currancyexchange;
 
-import com.example.currancyexchange.domain.CurrancyRequest;
+import com.example.currancyexchange.domain.currency.CurrancyRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;

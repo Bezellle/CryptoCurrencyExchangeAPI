@@ -1,8 +1,8 @@
 package com.example.currancyexchange;
 
-import com.example.currancyexchange.domain.CryptoExchangeResponse;
-import com.example.currancyexchange.domain.ExchangeRequestBody;
-import com.example.currancyexchange.domain.ExchangeResponse;
+import com.example.currancyexchange.domain.currency.CryptoExchangeResponse;
+import com.example.currancyexchange.domain.exchange.ExchangeRequestBody;
+import com.example.currancyexchange.domain.exchange.ExchangeResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class CryptoExchangeController {
     @Autowired
     private final CryptoExchangeService cryptoExchangeService;
 
-    public CryptoExchangeController(CryptoExchangeService cryptoExchangeService, CryptoExchangeClient cryptoExchangeClient) {
+    public CryptoExchangeController(CryptoExchangeService cryptoExchangeService) {
         this.cryptoExchangeService = cryptoExchangeService;
     }
 

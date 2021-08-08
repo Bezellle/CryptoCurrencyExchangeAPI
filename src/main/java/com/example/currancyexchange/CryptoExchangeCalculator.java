@@ -1,9 +1,9 @@
 package com.example.currancyexchange;
 
-import com.example.currancyexchange.domain.CryptoExchangeResponse;
-import com.example.currancyexchange.domain.ExchangeRequestBody;
-import com.example.currancyexchange.domain.ExchangeResult;
-import com.example.currancyexchange.domain.RequestedRates;
+import com.example.currancyexchange.domain.currency.CryptoExchangeResponse;
+import com.example.currancyexchange.domain.exchange.ExchangeRequestBody;
+import com.example.currancyexchange.domain.exchange.ExchangeResult;
+import com.example.currancyexchange.domain.currency.RequestedRates;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;

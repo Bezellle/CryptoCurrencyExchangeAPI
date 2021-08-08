@@ -1,4 +1,4 @@
-package com.example.currancyexchange.domain;
+package com.example.currancyexchange.domain.currency;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -15,14 +15,6 @@ public class CryptoExchangeResponse {
 
     public void setSource(String source) {
         this.source = source;
-    }
-
-
-
-    @Override
-    public String toString(){
-
-        return "";
     }
 
     public Map<String, BigDecimal> getRates() {
