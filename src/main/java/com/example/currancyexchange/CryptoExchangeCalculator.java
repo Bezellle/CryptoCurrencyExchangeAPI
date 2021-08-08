@@ -13,7 +13,7 @@ import java.util.List;
 
 @Component
 public class CryptoExchangeCalculator {
-    private String defaultExchangeCurrency = "USD";
+    private final String defaultExchangeCurrency = "USD";
 
     public CryptoExchangeResponse calculateResponseRates(RequestedRates rates, String currency, List<String> filters) {
         CryptoExchangeResponse result = new CryptoExchangeResponse();
@@ -34,7 +34,7 @@ public class CryptoExchangeCalculator {
     }
 
     public ArrayList<ExchangeResult> calculateExchangeResults(RequestedRates requestedRates, ExchangeRequestBody exchangeRequestBody) {
-        ArrayList<ExchangeResult> exchangeResults = new ArrayList<ExchangeResult>();
+        ArrayList<ExchangeResult> exchangeResults = new ArrayList<>();
         for (String currencyTo : exchangeRequestBody.getTo()) {
             ExchangeResult result = new ExchangeResult();
             result.setCurrency(currencyTo);

@@ -15,11 +15,9 @@ public class CryptoExchangeController {
 
     @Autowired
     private final CryptoExchangeService cryptoExchangeService;
-    private final CryptoExchangeClient cryptoExchangeClient;
 
     public CryptoExchangeController(CryptoExchangeService cryptoExchangeService, CryptoExchangeClient cryptoExchangeClient) {
         this.cryptoExchangeService = cryptoExchangeService;
-        this.cryptoExchangeClient = cryptoExchangeClient;
     }
 
     @GetMapping("/currencies/{currency}")

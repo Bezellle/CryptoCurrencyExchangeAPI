@@ -20,7 +20,6 @@ public class CryptoExchangeClient {
 
     public CurrancyRequest[] getAPICurrencyRequest() {
 
-        CurrancyRequest[] response = restTemplate.getForObject(nomicsAPI_URL+key, CurrancyRequest[].class);
-        return response;
+        return restTemplate.getForObject(nomicsAPI_URL+key, CurrancyRequest[].class);
     }
 }

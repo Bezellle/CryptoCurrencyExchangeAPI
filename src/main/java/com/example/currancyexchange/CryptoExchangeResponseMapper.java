@@ -3,10 +3,8 @@ package com.example.currancyexchange;
 import com.example.currancyexchange.domain.*;
 import org.springframework.stereotype.Component;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
