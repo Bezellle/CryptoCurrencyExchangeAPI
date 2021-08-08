@@ -1,4 +1,4 @@
-package com.example.currancyexchange.currencyExchange;
+package com.example.currancyexchange.logic;
 
 import com.example.currancyexchange.domain.currency.CryptoExchangeResponse;
 import com.example.currancyexchange.domain.exchange.ExchangeRequestBody;
