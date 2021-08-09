@@ -29,12 +29,12 @@ public class CryptoExchangeService {
     public CryptoExchangeResponse getCurrancyResponse(String currency, List<String> filters) {
         CurrancyNomicResponse[] currancyNomicResponses = cryptoExchangeClient.getAPICurrencyRequest();
         RequestedRates requestedRates = cryptoExchangeResponseMapper.createMapWithRates(currancyNomicResponses);
-        CryptoExchangeValidator.validateCurrency(requestedRates, currency, filters);
+//        CryptoExchangeValidator.validateCurrency(requestedRates, currency, filters);
         return cryptoExchangeCalculator.calculateResponseRates(requestedRates, currency, filters);
     }
 
     public ExchangeResponse getExchangeResponse(ExchangeRequestBody exchangeRequestBody) {
-        CryptoExchangeValidator.volidateAmount(exchangeRequestBody.getAmount());
+        CryptoExchangeValidator.validateAmount(exchangeRequestBody.getAmount());
         CurrancyNomicResponse[] currancyNomicResponses = cryptoExchangeClient.getAPICurrencyRequest();
         RequestedRates requestedRates = cryptoExchangeResponseMapper.createMapWithRates(currancyNomicResponses);
         CryptoExchangeValidator.validateCurrency(requestedRates, exchangeRequestBody.getFrom(), exchangeRequestBody.getTo());
@@ -42,7 +42,3 @@ public class CryptoExchangeService {
         return cryptoExchangeResponseMapper.createExchangeResponse(exchangeRequestBody, exchangeResult);
     }
 }
-
-// TODO Testing
-// TODO Packages
-// TODO Name Refactor
