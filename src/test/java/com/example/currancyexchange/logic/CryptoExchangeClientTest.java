@@ -23,7 +23,7 @@ public class CryptoExchangeClientTest {
 
 
     @Test
-    public void testEmptyRequest(){
+    public void testSendingRequestsToAPI(){
 
         CurrancyNomicResponse[] responses = new CurrancyNomicResponse[]{};
 
