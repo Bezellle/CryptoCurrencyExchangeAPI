@@ -28,7 +28,7 @@ public class CryptoExchangeService {
 
     public CryptoExchangeResponse getCurrancyResponse(String currency, List<String> filters) {
         CurrancyNomicResponse[] currancyNomicResponses = cryptoExchangeClient.getAPICurrencyRequest();
-        RequestedRates requestedRates = cryptoExchangeResponseMapper.createMapWithRates(currancyNomicResponses);
+        RequestedRates requestedRates = cryptoExchangeResponseMapper.createMapWithRatesFromApiResponse(currancyNomicResponses);
 //        CryptoExchangeValidator.validateCurrency(requestedRates, currency, filters);
         return cryptoExchangeCalculator.calculateResponseRates(requestedRates, currency, filters);
     }
@@ -36,7 +36,7 @@ public class CryptoExchangeService {
     public ExchangeResponse getExchangeResponse(ExchangeRequestBody exchangeRequestBody) {
         CryptoExchangeValidator.validateAmount(exchangeRequestBody.getAmount());
         CurrancyNomicResponse[] currancyNomicResponses = cryptoExchangeClient.getAPICurrencyRequest();
-        RequestedRates requestedRates = cryptoExchangeResponseMapper.createMapWithRates(currancyNomicResponses);
+        RequestedRates requestedRates = cryptoExchangeResponseMapper.createMapWithRatesFromApiResponse(currancyNomicResponses);
         CryptoExchangeValidator.validateCurrency(requestedRates, exchangeRequestBody.getFrom(), exchangeRequestBody.getTo());
         ArrayList<ExchangeResult> exchangeResult = cryptoExchangeCalculator.calculateExchangeResults(requestedRates, exchangeRequestBody);
         return cryptoExchangeResponseMapper.createExchangeResponse(exchangeRequestBody, exchangeResult);

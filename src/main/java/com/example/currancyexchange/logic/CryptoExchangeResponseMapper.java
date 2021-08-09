@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Component
 public class CryptoExchangeResponseMapper {
 
-    public RequestedRates createMapWithRates(CurrancyNomicResponse[] currancyNomicResponses){
+    public RequestedRates createMapWithRatesFromApiResponse(CurrancyNomicResponse[] currancyNomicResponses){
         RequestedRates ratesMap = new RequestedRates();
         ratesMap.setRates(Arrays.stream(currancyNomicResponses).collect(Collectors.toMap(CurrancyNomicResponse::getCurrency, CurrancyNomicResponse::getRate)));
         return ratesMap;
