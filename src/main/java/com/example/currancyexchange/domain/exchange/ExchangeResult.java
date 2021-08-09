@@ -6,11 +6,8 @@ public class ExchangeResult {
     private String currency;
     private BigDecimal rate;
     private BigDecimal result;
-    private final BigDecimal fee = new BigDecimal("0.0001");
+    private BigDecimal fee;
 
-    public final BigDecimal getFee() {
-        return fee;
-    }
 
     public String getCurrency() {
         return currency;
@@ -34,5 +31,13 @@ public class ExchangeResult {
 
     public void setResult(BigDecimal result) {
         this.result = result;
+    }
+
+    public BigDecimal getFee() {
+        return fee;
+    }
+
+    public void setFee(BigDecimal fee) {
+        this.fee = fee;
     }
 }

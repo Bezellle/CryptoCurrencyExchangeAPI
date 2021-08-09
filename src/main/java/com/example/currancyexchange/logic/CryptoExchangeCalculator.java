@@ -13,24 +13,31 @@ import java.util.List;
 
 @Component
 public class CryptoExchangeCalculator {
-    private final String defaultExchangeCurrency = "USD";
+    private final BigDecimal commission = new BigDecimal("0.01");
 
-    public CryptoExchangeResponse calculateResponseRates(RequestedRates rates, String currency, List<String> filters) {
+    public CryptoExchangeResponse calculateResponseRates(RequestedRates rates, String currencyFrom, List<String> filters) {
         CryptoExchangeResponse result = new CryptoExchangeResponse();
-        result.setSource(currency);
+        result.setSource(currencyFrom);
         if (filters != null && !filters.isEmpty()) {
             for (String filter : filters) {
-                BigDecimal rate = calculateRate(rates, currency, filter);
-                result.getRates().put(filter, rate);
+                if (rates.getRates().get(filter) != null && rates.getRates().get(filter).signum() > 0) {
+                    BigDecimal rate = calculateRate(rates, currencyFrom, filter);
+                    result.getRates().put(filter, rate);
+                }
             }
         } else {
-            result.getRates().put(defaultExchangeCurrency, rates.getRates().get(currency));
+            for (String currencyTo : rates.getRates().keySet()) {
+                if (rates.getRates().get(currencyTo) != null && rates.getRates().get(currencyTo).signum() > 0) {
+                    BigDecimal rate = calculateRate(rates, currencyFrom, currencyTo);
+                    result.getRates().put(currencyTo, rate);
+                }
+            }
         }
         return result;
     }
 
     private BigDecimal calculateRate(RequestedRates rates, String currencyFrom, String currencyTo) {
-        return rates.getRates().get(currencyFrom).divide(rates.getRates().get(currencyTo), RoundingMode.HALF_UP);
+        return rates.getRates().get(currencyFrom).divide(rates.getRates().get(currencyTo), 8, RoundingMode.HALF_UP);
     }
 
     public ArrayList<ExchangeResult> calculateExchangeResults(RequestedRates requestedRates, ExchangeRequestBody exchangeRequestBody) {
@@ -38,9 +45,9 @@ public class CryptoExchangeCalculator {
         for (String currencyTo : exchangeRequestBody.getTo()) {
             ExchangeResult result = new ExchangeResult();
             result.setCurrency(currencyTo);
+            result.setFee(exchangeRequestBody.getAmount().multiply(commission));
             result.setRate(calculateRate(requestedRates, exchangeRequestBody.getFrom(), currencyTo));
-            result.setResult(exchangeRequestBody.getAmount().multiply(BigDecimal.ONE.subtract(result.getFee())).multiply(result.getRate()).setScale(2,RoundingMode.HALF_UP));
-
+            result.setResult(exchangeRequestBody.getAmount().subtract(result.getFee()).multiply(result.getRate()).setScale(2, RoundingMode.HALF_UP));
             exchangeResults.add(result);
         }
         return exchangeResults;
