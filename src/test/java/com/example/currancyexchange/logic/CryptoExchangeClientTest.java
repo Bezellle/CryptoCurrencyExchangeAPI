@@ -1,17 +1,12 @@
 package com.example.currancyexchange.logic;
 
-import com.example.currancyexchange.domain.currency.CurrancyNomicResponse;
+import com.example.currancyexchange.domain.currency.CurrencyNomicResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.client.RestTemplate;
 
-import java.sql.Array;
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class CryptoExchangeClientTest {
@@ -25,15 +20,15 @@ public class CryptoExchangeClientTest {
     @Test
     public void testSendingRequestsToAPI(){
 
-        CurrancyNomicResponse[] responses = new CurrancyNomicResponse[]{};
+        CurrencyNomicResponse[] responses = new CurrencyNomicResponse[]{};
 
-        Mockito.when(mockedRestTemplate.getForObject(requestURL+key, CurrancyNomicResponse[].class)).thenReturn(responses);
+        Mockito.when(mockedRestTemplate.getForObject(requestURL+key, CurrencyNomicResponse[].class)).thenReturn(responses);
 
         CryptoExchangeClient cryptoExchangeClient = new CryptoExchangeClient(mockedRestTemplate);
         cryptoExchangeClient.setKey(key);
         cryptoExchangeClient.setNomicsAPI_URL(requestURL);
 
-        CurrancyNomicResponse[] result = cryptoExchangeClient.getAPICurrencyRequest();
+        CurrencyNomicResponse[] result = cryptoExchangeClient.getAPICurrencyRequest();
         assertTrue(responses.length == 0);
     }
 
