@@ -1,6 +1,6 @@
 package com.example.currancyexchange.logic;
 
-import com.example.currancyexchange.domain.currency.CurrancyNomicResponse;
+import com.example.currancyexchange.domain.currency.CurrencyNomicResponse;
 import com.example.currancyexchange.domain.currency.RequestedRates;
 import com.example.currancyexchange.domain.exchange.ExchangeRequestBody;
 import com.example.currancyexchange.domain.exchange.ExchangeResponse;
@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 @Component
 public class CryptoExchangeResponseMapper {
 
-    public RequestedRates createMapWithRatesFromApiResponse(CurrancyNomicResponse[] currancyNomicResponses){
+    public RequestedRates createMapWithRatesFromApiResponse(CurrencyNomicResponse[] currencyNomicRespons){
         RequestedRates ratesMap = new RequestedRates();
-        ratesMap.setRates(Arrays.stream(currancyNomicResponses).collect(Collectors.toMap(CurrancyNomicResponse::getCurrency, CurrancyNomicResponse::getRate)));
+        ratesMap.setRates(Arrays.stream(currencyNomicRespons).collect(Collectors.toMap(CurrencyNomicResponse::getCurrency, CurrencyNomicResponse::getRate)));
         return ratesMap;
     }
 

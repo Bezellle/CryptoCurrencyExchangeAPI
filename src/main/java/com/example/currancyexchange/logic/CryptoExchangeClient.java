@@ -1,6 +1,6 @@
 package com.example.currancyexchange.logic;
 
-import com.example.currancyexchange.domain.currency.CurrancyNomicResponse;
+import com.example.currancyexchange.domain.currency.CurrencyNomicResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -34,8 +34,8 @@ public class CryptoExchangeClient {
         this.restTemplate = restTemplate;
     }
 
-    public CurrancyNomicResponse[] getAPICurrencyRequest() {
+    public CurrencyNomicResponse[] getAPICurrencyRequest() {
 
-        return restTemplate.getForObject(nomicsAPI_URL+key, CurrancyNomicResponse[].class);
+        return restTemplate.getForObject(nomicsAPI_URL+key, CurrencyNomicResponse[].class);
     }
 }
