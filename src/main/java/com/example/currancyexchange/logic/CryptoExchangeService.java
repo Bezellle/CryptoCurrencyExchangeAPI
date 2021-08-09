@@ -29,7 +29,7 @@ public class CryptoExchangeService {
     public CryptoExchangeResponse getCurrancyResponse(String currency, List<String> filters) {
         CurrancyNomicResponse[] currancyNomicResponses = cryptoExchangeClient.getAPICurrencyRequest();
         RequestedRates requestedRates = cryptoExchangeResponseMapper.createMapWithRatesFromApiResponse(currancyNomicResponses);
-//        CryptoExchangeValidator.validateCurrency(requestedRates, currency, filters);
+        CryptoExchangeValidator.validateCurrency(requestedRates, currency, filters);
         return cryptoExchangeCalculator.calculateResponseRates(requestedRates, currency, filters);
     }
 
