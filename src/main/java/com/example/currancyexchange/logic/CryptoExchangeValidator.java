@@ -14,8 +14,11 @@ public class CryptoExchangeValidator {
         if (!rates.getRates().containsKey(from)){
             throw new WrongCurrencyException(String.format("Currency not found: %s", from));
         }
-        if (currencyToList != null && !currencyToList.isEmpty()) {
+        if (!currencyToList.isEmpty()) {
             for (String currency : currencyToList) {
+                if(currency.equals("")){
+                    continue;
+                }
                 if(!rates.getRates().containsKey(currency)){
                     throw new WrongCurrencyException(String.format("Currency not found: %s", currency));
                 }

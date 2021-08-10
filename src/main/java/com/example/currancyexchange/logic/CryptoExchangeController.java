@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CryptoExchangeController {
@@ -22,9 +24,9 @@ public class CryptoExchangeController {
 
     @GetMapping("/currencies/{currency}")
     public ResponseEntity<Object> getCurrency(@PathVariable("currency") String currency,
-                                              @RequestParam(name = "filter[]", required = false) List<String> filters) {
+                                              @RequestParam(name = "filter[]", required = false) Optional<List<String>> filters) {
 
-        CryptoExchangeResponse cryptoExchangeResponse = cryptoExchangeService.getCurrancyResponse(currency,filters);
+        CryptoExchangeResponse cryptoExchangeResponse = cryptoExchangeService.getCurrancyResponse(currency, filters.orElse(new ArrayList<String>()));
         return new ResponseEntity<>( cryptoExchangeResponse, HttpStatus.OK);
     }
 
