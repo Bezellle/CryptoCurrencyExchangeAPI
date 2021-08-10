@@ -26,7 +26,7 @@ public class CryptoExchangeController {
     public ResponseEntity<Object> getCurrency(@PathVariable("currency") String currency,
                                               @RequestParam(name = "filter[]", required = false) Optional<List<String>> filters) {
 
-        CryptoExchangeResponse cryptoExchangeResponse = cryptoExchangeService.getCurrancyResponse(currency, filters.orElse(new ArrayList<String>()));
+        CryptoExchangeResponse cryptoExchangeResponse = cryptoExchangeService.getCurrancyResponse(currency, filters.orElse(new ArrayList<>()));
         return new ResponseEntity<>( cryptoExchangeResponse, HttpStatus.OK);
     }
 
