@@ -7,10 +7,15 @@ import com.example.currancyexchange.exceptions.WrongCurrencyException;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 public class CryptoExchangeValidator {
 
     public static void validateCurrency(RequestedRates rates, String from, List<String> currencyToList) {
+        Optional.of(from).filter(f -> rates.getRates().containsKey(from))
+                .orElseThrow(()->{throw new WrongCurrencyException(String.format("Currency not found: %s", from));});
+
+//        Optional.of(currencyToList).
         if (!rates.getRates().containsKey(from)){
             throw new WrongCurrencyException(String.format("Currency not found: %s", from));
         }
