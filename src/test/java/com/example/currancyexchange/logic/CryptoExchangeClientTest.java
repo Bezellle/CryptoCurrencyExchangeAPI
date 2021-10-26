@@ -1,6 +1,7 @@
 package com.example.currancyexchange.logic;
 
 import com.example.currancyexchange.domain.currency.CurrencyNomicResponse;
+import com.example.currancyexchange.domain.currency.RequestedRates;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +29,7 @@ public class CryptoExchangeClientTest {
         cryptoExchangeClient.setKey(key);
         cryptoExchangeClient.setNomicsAPI_URL(requestURL);
 
-        CurrencyNomicResponse[] result = cryptoExchangeClient.getAPICurrencyRequest();
+        RequestedRates result = cryptoExchangeClient.getAPICurrencyRequest();
         assertTrue(responses.length == 0);
     }
 

@@ -1,55 +1,61 @@
 package com.example.currancyexchange.logic;
 
-import com.example.currancyexchange.domain.currency.CryptoExchangeResponse;
-import com.example.currancyexchange.domain.exchange.ExchangeRequestBody;
 import com.example.currancyexchange.domain.exchange.ExchangeResult;
-import com.example.currancyexchange.domain.currency.RequestedRates;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toMap;
 
 @Component
 public class CryptoExchangeCalculator {
     private final BigDecimal commission = new BigDecimal("0.01");
 
-    public CryptoExchangeResponse calculateResponseRates(RequestedRates rates, String currencyFrom, List<String> filters) {
-        CryptoExchangeResponse result = new CryptoExchangeResponse();
-        result.setSource(currencyFrom);
-        if (filters != null && !filters.isEmpty()) {
-            for (String filter : filters) {
-                if (rates.getRates().get(filter) != null && rates.getRates().get(filter).signum() > 0) {
-                    BigDecimal rate = calculateRate(rates, currencyFrom, filter);
-                    result.getRates().put(filter, rate);
-                }
-            }
-        } else {
-            for (String currencyTo : rates.getRates().keySet()) {
-                if (rates.getRates().get(currencyTo) != null && rates.getRates().get(currencyTo).signum() > 0) {
-                    BigDecimal rate = calculateRate(rates, currencyFrom, currencyTo);
-                    result.getRates().put(currencyTo, rate);
-                }
-            }
-        }
-        return result;
+
+    public Map<String, BigDecimal> calculateResponseRates(Map<String, BigDecimal> rates, String currencyFrom, List<String> filters) {
+        BigDecimal sourceCurrencyToUsdRate = rates.get(currencyFrom);
+        return getFilteredRates(rates, filters)
+                .map(calculateRate(sourceCurrencyToUsdRate))
+                .collect(toMap(Entry::getKey, Entry::getValue));
     }
 
-    private BigDecimal calculateRate(RequestedRates rates, String currencyFrom, String currencyTo) {
-        return rates.getRates().get(currencyFrom).divide(rates.getRates().get(currencyTo), 8, RoundingMode.HALF_UP);
+    private Stream<Entry<String, BigDecimal>> getFilteredRates(Map<String, BigDecimal> rates, List<String> filters) {
+        return filters.isEmpty() ? rates.entrySet().stream().filter(entry -> entry.getValue().equals(BigDecimal.ZERO)) : rates.entrySet().stream().filter(entry -> filters.contains(entry.getKey())).filter(entry -> entry.getValue().equals(BigDecimal.ZERO));
     }
 
-    public ArrayList<ExchangeResult> calculateExchangeResults(RequestedRates requestedRates, ExchangeRequestBody exchangeRequestBody) {
-        ArrayList<ExchangeResult> exchangeResults = new ArrayList<>();
-        for (String currencyTo : exchangeRequestBody.getTo()) {
-            ExchangeResult result = new ExchangeResult();
-            result.setCurrency(currencyTo);
-            result.setFee(exchangeRequestBody.getAmount().multiply(commission));
-            result.setRate(calculateRate(requestedRates, exchangeRequestBody.getFrom(), currencyTo));
-            result.setResult(exchangeRequestBody.getAmount().subtract(result.getFee()).multiply(result.getRate()).setScale(2, RoundingMode.HALF_UP));
-            exchangeResults.add(result);
-        }
-        return exchangeResults;
+    private Function<Entry<String, BigDecimal>, SimpleEntry<String, BigDecimal>> calculateRate(BigDecimal sourceCurrencyToUsdRate) {
+        return e -> new SimpleEntry<>(e.getKey(), calculateRate(sourceCurrencyToUsdRate, e.getValue()));
+    }
+
+    private BigDecimal calculateRate(BigDecimal sourceCurrencyToUsdRate, BigDecimal targetCurrencyUsdRate) {
+        return Optional.of(sourceCurrencyToUsdRate.divide(targetCurrencyUsdRate, 8, RoundingMode.HALF_UP)).orElse(BigDecimal.ZERO);
+    }
+
+    public List<ExchangeResult> calculateExchangeResults(Map<String, BigDecimal> rates, String sourceCurrency, BigDecimal amount, List<String> targetCurrencies) {
+        BigDecimal sourceCurrencyUsdRate = rates.get(sourceCurrency);
+
+        return getFilteredRates(rates, targetCurrencies)
+                .map(entry -> new ExchangeResult(entry.getKey(),
+                        calculateRate(sourceCurrencyUsdRate, entry.getValue()),
+                        calculateFee(amount),
+                        calculateExchangeResult(amount, calculateFee(amount), calculateRate(sourceCurrencyUsdRate, entry.getValue()))))
+                .collect(Collectors.toList());
+    }
+
+    private BigDecimal calculateFee(BigDecimal amount) {
+        return amount.multiply(commission);
+    }
+
+    private BigDecimal calculateExchangeResult(BigDecimal amount, BigDecimal fee, BigDecimal rate) {
+        return amount.subtract(fee).multiply(rate).setScale(2, RoundingMode.HALF_UP);
     }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ExchangeRequestBody {
+public class ExchangeRequest {
     private String from;
     private BigDecimal amount;
     private List<String> to;

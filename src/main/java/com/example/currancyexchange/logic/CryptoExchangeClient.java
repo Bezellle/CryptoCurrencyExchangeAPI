@@ -1,6 +1,7 @@
 package com.example.currancyexchange.logic;
 
 import com.example.currancyexchange.domain.currency.CurrencyNomicResponse;
+import com.example.currancyexchange.domain.currency.RequestedRates;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
@@ -31,11 +32,7 @@ public class CryptoExchangeClient {
         this.restTemplate = restTemplate;
     }
 
-    public CurrencyNomicResponse[] getAPICurrencyRequest() {
-        try{
-            return restTemplate.getForObject(nomicsAPI_URL+key, CurrencyNomicResponse[].class);
-        }catch (HttpStatusCodeException ex){
-            throw ex;
-        }
+    public RequestedRates getAPICurrencyRequest() {
+        return CryptoExchangeResponseMapper.createMapWithRatesFromApiResponse(restTemplate.getForObject(nomicsAPI_URL+key, CurrencyNomicResponse[].class));
     }
 }

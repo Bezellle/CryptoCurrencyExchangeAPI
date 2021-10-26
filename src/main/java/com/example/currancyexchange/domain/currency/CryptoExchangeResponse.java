@@ -9,6 +9,11 @@ public class CryptoExchangeResponse {
     // private RatesCryptoExchangeResponse rates;
     private Map<String, BigDecimal> rates = new HashMap<>();
 
+    public CryptoExchangeResponse(String source, Map<String, BigDecimal> rates) {
+        this.source = source;
+        this.rates = rates;
+    }
+
     public String getSource() {
         return source;
     }

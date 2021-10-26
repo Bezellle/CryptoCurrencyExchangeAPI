@@ -2,11 +2,18 @@ package com.example.currancyexchange.domain.exchange;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExchangeResponse {
     private String from;
     private BigDecimal amount;
-    private ArrayList<ExchangeResult> exchangeResultList;
+    private List<ExchangeResult> exchangeResultList;
+
+    public ExchangeResponse(String from, BigDecimal amount, List<ExchangeResult> exchangeResultList) {
+        this.from = from;
+        this.amount = amount;
+        this.exchangeResultList = exchangeResultList;
+    }
 
     public String getFrom() {
         return from;
@@ -24,7 +31,7 @@ public class ExchangeResponse {
         this.amount = amount;
     }
 
-    public ArrayList<ExchangeResult> getExchangeResultList() {
+    public List<ExchangeResult> getExchangeResultList() {
         return exchangeResultList;
     }
 

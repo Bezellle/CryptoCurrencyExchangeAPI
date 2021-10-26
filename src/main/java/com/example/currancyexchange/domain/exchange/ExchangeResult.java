@@ -5,9 +5,16 @@ import java.math.BigDecimal;
 public class ExchangeResult {
     private String currency;
     private BigDecimal rate;
-    private BigDecimal result;
     private BigDecimal fee;
+    private BigDecimal result;
 
+
+    public ExchangeResult(String currency, BigDecimal rate, BigDecimal fee, BigDecimal result) {
+        this.currency = currency;
+        this.rate = rate;
+        this.fee = fee;
+        this.result = result;
+    }
 
     public String getCurrency() {
         return currency;

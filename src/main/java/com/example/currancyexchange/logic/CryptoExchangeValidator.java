@@ -1,7 +1,6 @@
 package com.example.currancyexchange.logic;
 
 import com.example.currancyexchange.domain.currency.RequestedRates;
-import com.example.currancyexchange.domain.exchange.ExchangeRequestBody;
 import com.example.currancyexchange.exceptions.WrongAmountException;
 import com.example.currancyexchange.exceptions.WrongCurrencyException;
 
